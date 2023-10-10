@@ -1,0 +1,213 @@
+1)
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Web;
+
+namespace deneme
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+
+            Animal animal = new Animal("Erkey");
+            Dog dog = new Dog("Alfa", "Afçarka", "erkey");
+
+            Console.WriteLine("Dog Name: " + dog.Name);
+            Console.WriteLine("Animal Gender: " + animal.Gender);
+            Console.WriteLine("Dog Breed: " + dog.Breed);
+            Console.WriteLine("Animal BirthYear: " + animal.BirthYear);
+        }
+
+
+    }
+
+    public class Animal
+    {
+        private string _gender;
+        private int _birthYear;
+
+        public string Gender { get { return _gender; } }
+
+        public int BirthYear { get { return _birthYear; } }
+
+        public Animal(string gender)
+        {
+            this._gender = gender;
+            _birthYear = DateTime.Now.Year;
+        }
+    }
+
+    public class Dog : Animal
+    {
+        private string _name;
+        private string _breed;
+
+        public string Name { get { return _name; } }
+
+        public string Breed { get { return _breed; } set { { _breed = value; } } }
+
+        public Dog(string name, string breed, string gender) : base(gender)
+        {
+            this._name = name;
+            this._breed = breed;
+        }
+    }
+
+
+}
+
+
+
+
+//******************************************************************************************************************************************************
+
+
+2)
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Web;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+
+        Student student1 = new Student("aqil", "baxsiyev", 19, true);
+        Student student2 = new Student("liqa", "veyisxab", 91, false);
+
+
+        Group group = new Group("AB104", 5);
+
+
+        group.AddStudent(student1);
+        group.AddStudent(student2);
+        group.GetAll();
+        group.GetOnlineStudents();
+        group.GetOfflineStudents();
+    }
+}
+
+public class Person
+{
+    private string name;
+    private string surname;
+    private int age;
+
+    public Person(string name, string surname, int age)
+    {
+        this.name = name;
+        this.surname = surname;
+        this.age = age;
+    }
+
+    public string Name
+    {
+        get { return name; }
+        set { name = value; }
+    }
+
+    public string Surname
+    {
+        get { return surname; }
+        set { surname = value; }
+    }
+
+    public int Age
+    {
+        get { return age; }
+        set { age = value; }
+    }
+}
+
+public class Student : Person
+{
+    private bool isOnline;
+
+    public Student(string name, string surname, int age, bool isOnline)
+        : base(name, surname, age)
+    {
+        this.isOnline = isOnline;
+    }
+
+    public bool IsOnline
+    {
+        get { return isOnline; }
+        set { isOnline = value; }
+    }
+}
+
+public class Group
+{
+    private string groupName;
+    private Student[] students;
+    private int studentCount;
+
+    public Group(string groupName, int maxStudents)
+    {
+        this.groupName = groupName;
+        students = new Student[maxStudents];
+        studentCount = 0;
+    }
+
+    public string GroupName
+    {
+        get { return groupName; }
+        set { groupName = value; }
+    }
+
+    public void AddStudent(Student student)
+    {
+        if (studentCount < students.Length)
+        {
+            students[studentCount] = student;
+            studentCount++;
+        }
+        else
+        {
+            Console.WriteLine($"Group '{groupName}' is full. Cannot add more students.");
+        }
+    }
+
+    public void GetAll()
+    {
+        Console.WriteLine($"Students in Group '{groupName}':");
+        for (int i = 0; i < studentCount; i++)
+        {
+            Console.WriteLine($"{students[i].Name} {students[i].Surname}");
+        }
+    }
+
+    public void GetOnlineStudents()
+    {
+        Console.WriteLine($"Online Students in Group '{groupName}':");
+        for (int i = 0; i < studentCount; i++)
+        {
+            if (students[i].IsOnline)
+            {
+                Console.WriteLine($"{students[i].Name} {students[i].Surname}");
+            }
+        }
+    }
+
+    public void GetOfflineStudents()
+    {
+        Console.WriteLine($"Offline Students in Group '{groupName}':");
+        for (int i = 0; i < studentCount; i++)
+        {
+            if (!students[i].IsOnline)
+            {
+                Console.WriteLine($"{students[i].Name} {students[i].Surname}");
+            }
+        }
+    }
+}
+
+
